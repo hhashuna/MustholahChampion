@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Game Gurun - Tebak Kata</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Fredoka', sans-serif;
+      background: url('Mustholah.png');
+      background-size: cover;
+      background-attachment: fixed;
+      color: #4b2e00;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .game-container {
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 15px;
+      padding: 20px;
+      max-width: 1000px;
+      margin: auto;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .scoreboard, .timer, .level, .player-name {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    .columns {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .column {
+      flex: 0 0 48%;
+    }
+
+    .input-group {
+      display: flex;
+      align-items: center;
+      margin: 6px 0;
+    }
+
+    .input-number {
+      width: 35px;
+      font-weight: bold;
+    }
+
+    .input-group input {
+      flex: 1;
+      padding: 10px;
+      font-size: 14px;
+      margin-left: 10px;
+      border-radius: 6px;
+      border: 1px solid #c9a86b;
+    }
+
+    .button {
+      margin: 8px;
+      padding: 10px 16px;
+      font-size: 14px;
+      background: #a67c00;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background: #cfa300;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .leaderboard {
+      background: #fff6e0;
+      border: 2px dashed #d2a679;
+      padding: 10px;
+      margin-top: 20px;
+      border-radius: 8px;
+      text-align: left;
+    }
+
+    #admin-panel {
+      background: #fff8e1;
+      border: 2px solid #d4af37;
+      padding: 15px;
+      margin-top: 20px;
+      display: none;
+    }
+
+    @media (max-width: 600px) {
+      .column {
+        flex: 0 0 100%;
+      }
+
+      .input-number {
+        width: 28px;
+      }
+
+      .input-group input {
+        font-size: 16px;
+        padding: 12px;
+      }
+
+      .button {
+        width: 100%;
+        margin: 6px 0;
+        font-size: 16px;
+      }
+
+      .game-container {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <h1>🏜️ Game Tebak Kata - Petualangan Gurun</h1>
+    <div class="player-name">
+      Nama Pemain: <input type="text" id="playerName" placeholder="Masukkan nama Anda">
+    </div>
+    <div class="scoreboard">🎯 Skor Total: <span id="total-score">0</span></div>
+    <div class="level">📜 Level: <span id="current-level">1</span> / 5</div>
+    <div class="timer">⏱️ Waktu Tersisa: <span id="time-left">60</span> detik</div>
+
+    <form id="game-form">
+      <div class="columns" id="input-columns"></div>
+      <button type="button" class="button" onclick="submitAnswers()">Cek Jawaban</button>
+      <button type="button" class="button" onclick="prevLevel()">Kembali</button>
+      <button type="button" class="button" onclick="nextLevel()">Level Berikutnya</button>
+      <button type="button" id="finish-button" class="button hidden" onclick="finishGame()">Selesai</button>
+    </form>
+
+    <div class="leaderboard" id="leaderboard">
+      <h3>🏆 Leaderboard</h3>
+      <ul id="leaderboard-list"></ul>
+    </div>
+
+    <div id="admin-login">
+      <h3>🔒 Login Admin</h3>
+      <input type="password" id="adminPassword" placeholder="Masukkan password admin">
+      <button class="button" onclick="loginAdmin()">Login</button>
+    </div>
+
+    <div id="admin-panel">
+      <h3>🎛️ Panel Admin</h3>
+      <button class="button" onclick="logoutAdmin()">Logout</button>
+      <label>Waktu per level (detik): <input type="number" id="timeSetting" value="60"></label>
+      <br>
+      <button class="button" onclick="saveTimeSetting()">Simpan Waktu</button>
+      <br><br>
+      <h4>Atur Jawaban Benar - Level <span id="admin-level">1</span></h4>
+      <div id="answer-inputs"></div>
+      <button class="button" onclick="saveAnswers()">Simpan Jawaban</button>
+      <button class="button" onclick="prevAdminLevel()">Level Sebelumnya</button>
+      <button class="button" onclick="nextAdminLevel()">Level Selanjutnya</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+<link rel="stylesheet" href="style.css">
